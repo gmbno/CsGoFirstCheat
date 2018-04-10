@@ -3,13 +3,14 @@
 moduleManager::moduleManager() {
     this->_dwBaseClient = 0x0;
     this->_dwBaseEngine = 0x0;
+    this->_dwBasePlayer = 0x0;
 }
 
 moduleManager::~moduleManager() {
     
 }
 
-void moduleManager::loadModules(DWORD pid) {
+void moduleManager::loadModules(DWORD pid, HANDLE const &handle) {
     HANDLE hModule = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
     MODULEENTRY32 mEntry;
     mEntry.dwSize = sizeof(mEntry);
@@ -18,6 +19,9 @@ void moduleManager::loadModules(DWORD pid) {
         if (!strcmp(mEntry.szModule, "client.dll"))
         {
             this->_dwBaseClient = (DWORD)mEntry.modBaseAddr;
+            ReadProcessMemory(handle, 
+                reinterpret_cast<LPVOID>(this->_dwBaseClient + Offsets::m_dwLocalPlayer),
+                &this->_dwBasePlayer, sizeof(this->_dwBasePlayer), NULL);
         } else if (!strcmp(mEntry.szModule, "engine.dll")) {
             this->_dwBaseEngine = (DWORD)mEntry.modBaseAddr;            
         }
@@ -31,4 +35,8 @@ DWORD const &moduleManager::getDwBaseClient() const {
 
 DWORD const &moduleManager::getDwBaseEngine() const {
     return this->_dwBaseEngine;
+}
+
+DWORD const &moduleManager::getDwBasePlayer() const {
+    return this->_dwBasePlayer;
 }

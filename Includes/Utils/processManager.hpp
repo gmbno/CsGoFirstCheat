@@ -9,7 +9,6 @@ class processManager {
         processManager();
         ~processManager();
         void loadProcess(std::string const &winName = "Counter-Strike: Global Offensive");
-        void refreshHandle();
         DWORD const &getPid() const;
         HANDLE const &getHandle() const;
     private:

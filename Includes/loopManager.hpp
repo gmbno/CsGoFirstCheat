@@ -1,7 +1,7 @@
 #pragma once
 
-#include "processManager.hpp"
-#include "moduleManager.hpp"
+#include "Utils/processManager.hpp"
+#include "Utils/moduleManager.hpp"
 #include "Features/trgbFeature.hpp"
 
 class loopManager {

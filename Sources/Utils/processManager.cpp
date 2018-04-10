@@ -26,11 +26,6 @@ void processManager::loadProcess(std::string const &winName) {
     this->_handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, this->_pid);
 }
 
-void processManager::refreshHandle() {
-    CloseHandle(this->_handle);
-    this->_handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, this->_pid);    
-}
-
 DWORD const &processManager::getPid() const {
     return this->_pid;
 }

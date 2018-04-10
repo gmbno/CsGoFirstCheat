@@ -9,8 +9,9 @@ loopManager::~loopManager() {
 }
 
 int loopManager::mainLoop(processManager &pm, moduleManager const &mm) {
+    this->_trgb = trgbFeature(pm.getHandle(), mm);
     while (1) {
-        pm.refreshHandle();
+        //pm.refreshHandle();
         if (GetAsyncKeyState(VK_F11)) {
             std::cout << "Leaving..." << std::endl;
             Sleep(3000);

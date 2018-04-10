@@ -9,7 +9,7 @@ int main() {
     loopManager lm;
 
     pm.loadProcess();
-    mm.loadModules(pm.getPid());
+    mm.loadModules(pm.getPid(), pm.getHandle());
 
     return lm.mainLoop(pm, mm);
 }
