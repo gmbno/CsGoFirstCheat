@@ -22,6 +22,9 @@ void moduleManager::loadModules(DWORD pid, HANDLE const &handle) {
             ReadProcessMemory(handle, 
                 reinterpret_cast<LPVOID>(this->_dwBaseClient + Offsets::m_dwLocalPlayer),
                 &this->_dwBasePlayer, sizeof(this->_dwBasePlayer), NULL);
+            ReadProcessMemory(handle, 
+                reinterpret_cast<LPVOID>(this->_dwEntityList + Offsets::m_dwEntityList),
+                &this->_dwEntityList, sizeof(this->_dwEntityList), NULL);
         } else if (!strcmp(mEntry.szModule, "engine.dll")) {
             this->_dwBaseEngine = (DWORD)mEntry.modBaseAddr;            
         }
@@ -39,4 +42,8 @@ DWORD const &moduleManager::getDwBaseEngine() const {
 
 DWORD const &moduleManager::getDwBasePlayer() const {
     return this->_dwBasePlayer;
+}
+
+DWORD const &moduleManager::getDwEntityList() const {
+    return this->_dwEntityList;
 }

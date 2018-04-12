@@ -13,8 +13,10 @@ class moduleManager {
         DWORD const &getDwBaseClient() const;
         DWORD const &getDwBaseEngine() const;
         DWORD const &getDwBasePlayer() const;
+        DWORD const &getDwEntityList() const;
     private:
         DWORD _dwBaseClient;
         DWORD _dwBaseEngine;
         DWORD _dwBasePlayer;
+        DWORD _dwEntityList;
 };
