@@ -1,4 +1,4 @@
-#include "moduleManager.hpp"
+#include "Utils/moduleManager.hpp"
 
 moduleManager::moduleManager() {
     this->_dwBaseClient = 0x0;
@@ -14,19 +14,24 @@ void moduleManager::loadModules(DWORD pid, HANDLE const &handle) {
     HANDLE hModule = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, pid);
     MODULEENTRY32 mEntry;
     mEntry.dwSize = sizeof(mEntry);
- 
-    while (Module32Next(hModule, &mEntry)) {
+
+    while (Module32Next(hModule, &mEntry))
+    {
         if (!strcmp(mEntry.szModule, "client.dll"))
         {
             this->_dwBaseClient = (DWORD)mEntry.modBaseAddr;
-            ReadProcessMemory(handle, 
-                reinterpret_cast<LPVOID>(this->_dwBaseClient + Offsets::m_dwLocalPlayer),
-                &this->_dwBasePlayer, sizeof(this->_dwBasePlayer), NULL);
-            ReadProcessMemory(handle, 
-                reinterpret_cast<LPVOID>(this->_dwEntityList + Offsets::m_dwEntityList),
-                &this->_dwEntityList, sizeof(this->_dwEntityList), NULL);
-        } else if (!strcmp(mEntry.szModule, "engine.dll")) {
-            this->_dwBaseEngine = (DWORD)mEntry.modBaseAddr;            
+            ReadProcessMemory(handle,
+                              reinterpret_cast<LPVOID>(this->_dwBaseClient + Offsets::m_dwLocalPlayer),
+                              &this->_dwBasePlayer, sizeof(this->_dwBasePlayer), NULL);
+            ReadProcessMemory(handle,
+                              reinterpret_cast<LPVOID>(this->_dwEntityList + Offsets::m_dwEntityList),
+                              &this->_dwEntityList, sizeof(this->_dwEntityList), NULL);
+        }
+        else if (!strcmp(mEntry.szModule, "engine.dll"))
+        {
+            ReadProcessMemory(handle,
+                              reinterpret_cast<LPVOID>((DWORD)mEntry.modBaseAddr + Offsets::m_dwClientState), 
+                              &this->_dwBaseEngine, sizeof(DWORD), NULL);
         }
     }
     CloseHandle(hModule);

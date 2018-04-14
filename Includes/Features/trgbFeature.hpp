@@ -2,9 +2,12 @@
 
 #include "Utils/offsets.hpp"
 #include "Utils/moduleManager.hpp"
+#include "Utils/memManager.hpp"
 #include <Windows.h>
+#include <math.h>
 
 class trgbFeature {
+       
     public:
         trgbFeature();
         trgbFeature(HANDLE handle, moduleManager const &mm);

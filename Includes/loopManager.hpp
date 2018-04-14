@@ -3,13 +3,17 @@
 #include "Utils/processManager.hpp"
 #include "Utils/moduleManager.hpp"
 #include "Features/trgbFeature.hpp"
+#include "Features/aimbtFeature.hpp"
 
 class loopManager {
     public:
         loopManager();
         ~loopManager();
-        int mainLoop(processManager &pm, moduleManager const &mm);
+        void initFeatures(processManager &pm, moduleManager const &mm);
+        int mainLoop();
     private:
         BOOL _trgbEnabled;
         trgbFeature _trgb;
+        BOOL _aimbtEnabled;
+        aimbtFeature _aimbt;
 };

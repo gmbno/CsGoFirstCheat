@@ -1,6 +1,6 @@
 #include <iostream>
-#include "processManager.hpp"
-#include "moduleManager.hpp"
+#include "Utils/processManager.hpp"
+#include "Utils/moduleManager.hpp"
 #include "loopManager.hpp"
 
 int main() {
@@ -11,5 +11,6 @@ int main() {
     pm.loadProcess();
     mm.loadModules(pm.getPid(), pm.getHandle());
 
-    return lm.mainLoop(pm, mm);
+    lm.initFeatures(pm, mm);
+    return lm.mainLoop();
 }
